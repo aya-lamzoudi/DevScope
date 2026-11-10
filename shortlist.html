@@ -14,9 +14,9 @@
 
 <body>
     <!-- start the header -->
-    <header class="fixed top-0 left-0 w-full z-50">
-        <div class="header-container flex justify-between items-center px-5 h-[50px] bg-[#082F49] border-b border-gray-500
-                max-[767px]:flex-wrap max-[767px]:h-auto max-[767px]:px-2 max-[767px]:py-2">
+    <header class="fixed top-0 left-0 w-full z-50 ">
+        <div class="header-container w-[90%] mx-auto my-4 flex justify-between items-center px-5 h-[50px] bg-[#082F49] border-b border-gray-500
+                max-[767px]:flex-wrap max-[767px]:h-auto max-[767px]:px-2 max-[767px]:py-2 rounded-full">
             <!-- Logo -->
             <div class="logo flex gap-2 items-center shrink-0">
                 <img src="./img/logo.png" alt="logo" class="w-[30px] h-[30px] rounded-full">
@@ -29,7 +29,7 @@
                     <li class="active text-xs  rounded-lg px-6 py-2 font-semibold hover:bg-slate-800">
                         <a href="index.html">Recherche</a>
                     </li>
-                    <li class="rounded-lg px-6 py-2 font-semibold text-xs text-[#22D3EE] hover:bg-slate-800">
+                    <li class="rounded-lg px-6 py-2 font-semibold text-[#22D3EE] text-xs hover:bg-slate-800">
                         <a href="shortlist.html">Shortlist</a>
                     </li>
 
@@ -40,11 +40,56 @@
     <!-- end header -->
 
     <!-- start main section -->
-    <main>
-        
+
+    <main class="min-h-screen bg-[#0F172A] text-white pt-[60px] max-[767px]:pt-[100px] ">
+
+        <div
+            class="shortlist mx-auto flex justify-center items-center max-w-[1600px] flex-col gap-10 px-4 py-6 md:px-8 ">
+
+            <section id="devlopper-list" class="flex flex-col gap-5 w-[85%] ">
+                <article
+                    class="devlopper-card flex flex-col gap-5 rounded-2xl border border-slate-700 bg-[#082F49] p-5 px-10 md:flex-row md:items-center md:justify-between">
+                    <div class="devlopper-details flex min-w-0 items-center gap-10">
+                        <div
+                            class="logo flex flex-col items-center justify-center rounded-xl  text-center">
+                                <img src="./img/logo.png" alt="logo" class="w-[60px] h-[60px] rounded-full">
+                               
+                        </div>
+                        <div class="match-info min-w-0">
+                            <span
+                                class="devlopper-name rounded-lg px-3 py-1 text-sm font-semibold text-slate-300">
+                               Aya lamzoudi</span>
+                            <h2 class="devlopper-user-name  mt-2 text-l font-bold">@aya-lamzoudi <span class="lang rounded-lg bg-slate-700 px-3 py-1 text-sm font-semibold text-slate-300">Java</span></h2>
+                            <p id="devlopper-note" class="mt-2 flex items-center gap-2 text-slate-400">note</p>
+                             <p id="devlopper-date" class="mt-2 flex items-center gap-2 text-slate-400">ajouter le 13/05/2026 </p>
+                            
+                        </div>
+                    </div>
+
+                    <div class="user-actions flex flex-wrap items-center justify-end gap-4">
+
+                        <div class="user-rate flex items-center gap-4">
+                            <div class="status flex flex-col gap-3 ">
+                                <button type="button"
+                                    class="status-btn text-blue-500 font-bold hover:text-blue-300 ">
+                                     A contacter</button>
+                                <!-- <button type="button"
+                                    class="tachkila-btn rounded-xl border border-slate-600 px-4 py-2 font-bold hover:bg-slate-700">Voir
+                                    la composition </button> -->
+                            </div>
+
+                            <!-- <button type="button" class="edit-match-btn p-2 text-slate-400 hover:text-green-400"><i
+                                    class="fa-solid fa-pen" aria-hidden="true"></i></button>
+                            <button type="button" class="delete-match-btn p-2 text-slate-400 hover:text-red-400"><i
+                                    class="fa-solid fa-trash-can" aria-hidden="true"></i></button> -->
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+        </div>
 
     </main>
-
     <!-- end main section -->
 </body>
 
