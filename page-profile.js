@@ -2,6 +2,8 @@
 
 import { getUser, getRepo } from "./api.js";
 
+
+
 const name = new URLSearchParams(window.location.search).get('name');
 console.log(`https://api.github.com/users/${name}`)
 console.log(name)
@@ -20,10 +22,10 @@ console.log(repo)
 // }
 
 
-
+affichage(user, repo)
 function affichage(user, repo) {
 
-    let profile = document.querySelector(".profile-page").innerHTML = `
+    document.querySelector(".profile-page").innerHTML = `
    
           <form class="serch-bar w-[50%] flex flex-col self-center">
                 <div class=" flex flex-1 items-center rounded-full border-slate-600 bg-[#082F49] min-h-12 px-4">
@@ -42,7 +44,7 @@ function affichage(user, repo) {
 
 
             <!-- PROFILE AND REPOSITORIES -->
-            <section class="grid grid-cols-1 lg:grid-cols-[345px_1fr] gap-6 items-start">
+            <section id="container-section" class="grid grid-cols-1 lg:grid-cols-[345px_1fr] gap-6 items-start">
 
                 <!-- PROFILE CARD -->
                 <div class="profile-card bg-[#082F49]/70 border border-slate-600/40
@@ -167,9 +169,9 @@ function affichage(user, repo) {
                 
    
    `
-    const test = document.createElement("div")
-    test.className = "grid grid-cols-1 md:grid-cols-2 gap-4";
-    test.id = "repos-container";
+    const repocaitainer = document.createElement("div")
+    repocaitainer.className = "grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-[100vh]";
+    repocaitainer.id = "repos-container";
     repo.forEach(repo => {
         const reposection = document.createElement("article");
         reposection.className = "bg-[#0F172A]/80 border border-slate-700 rounded-2xl p-5 hover:border-[#22D3EE]/60"
@@ -211,13 +213,59 @@ function affichage(user, repo) {
                         </p>
 
         `
-        test.appendChild(reposection);
+        repocaitainer.appendChild(reposection);
 
 
     });
 
-    document.querySelector(".profile-page").appendChild(test);
+    document.querySelector("#container-section").appendChild(repocaitainer);
+
+
+    const form = document.querySelector(".serch-bar")
+    const regex = /^(?![0-9-])[a-zA-Z][a-zA-Z0-9-]{2,37}(?<!-)$/; // exactement 5 chiffres
+
+
+    form.addEventListener("submit", (event) => {
+        console.log("test")
+        event.preventDefault();
+        // la page ne se recharge pas
+        const input = document.querySelector("#search-profile")
+        const code = input.value.trim();
+        const erreur = document.querySelector("#profile-err")
+        if (!regex.test(code)) { erreur.textContent = "Code invalide"; return; }
+        else erreur.textContent = "";
+        window.location.href = `profile.html?name=${encodeURIComponent(code)}`;
+
+    });
+    console.log("hey")
+    
+    
+}
+document.querySelector("#add-shortlist").addEventListener("click",()=>{
+   post()
+})
+
+let userobject = {
+    login: user.login,
+    name:user.name,
+    avatar_url: user.avatar_url,
+    html_url: user.html_url,
+    language: repo.length > 0 ? repo[0].language : null,
+    rating: 3,
+    status: "A contacter",
+    note: "",
+    createdAt: user.created_at
 }
 
 
-affichage(user, repo)
+async function post(){
+   const resp = await fetch("https://6af35283d2377d6c3704e90e.mockapi.io/condidats", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userobject)
+    })
+
+    const candidatCree = await resp.json();
+      console.log(candidatCree)
+}
+
