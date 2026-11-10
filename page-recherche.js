@@ -1,6 +1,6 @@
 
 const form = document.querySelector(".serch-bar")
-const regex = /^[A-Za-z]{3,}$/; // exactement 5 chiffres
+const regex = /^(?![0-9-])[a-zA-Z][a-zA-Z0-9-]{2,37}(?<!-)$/; // exactement 5 chiffres
 
 
 form.addEventListener("submit", (event) => {
@@ -12,6 +12,7 @@ form.addEventListener("submit", (event) => {
     const erreur = document.querySelector("#profile-err")
     if (!regex.test(code)) { erreur.textContent = "Code invalide"; return; }
     else erreur.textContent = "";
-    window.location.href = `profile.html?code=${encodeURIComponent(code)}`;
+    window.location.href = `profile.html?name=${encodeURIComponent(code)}`;
+    
 });
 
