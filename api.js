@@ -1,18 +1,24 @@
 
 
-
 export async function getUser(username) {
   try {
-    const responce = await fetch(`https://api.github.com/users/${username}`);
+    const response = await fetch(`https://api.github.com/users/${username}`);
 
-    if (!responce.ok) throw new Error("Erour " + responce.status);
+    if (response.status === 404) {
 
-    return responce.json();
+      return null;
+    }
+
+    if (!response.ok) {
+      throw new Error("Error " + response.status);
+    }
+
+    return await response.json();
+
   } catch (error) {
-    //  document.querySelector(".testing") =error.message
     console.error("Failed to fetch data:", error.message);
-  }
 
+  }
 }
 
 // export async function getUser(username) {
@@ -45,7 +51,7 @@ export async function getUser(username) {
 export async function getRepo(username) {
 
   try {
-    const responce = await fetch(`https://api.github.com/users/${username}/repos`)
+    const responce = await fetch(`https://api.github.com/users/${username}/repos`);
 
     if (!responce.ok) throw new Error("erour" + responce.status);
     return responce.json();
@@ -59,7 +65,7 @@ export async function getRepo(username) {
 export async function get() {
   try {
     const resp = await fetch("https://6af35283d2377d6c3704e90e.mockapi.io/condidats")
-    if (!resp) throw new erreur("error: ", resp.status);
+    if (!resp.ok) throw new erreur("error: ", resp.status);
     const candidatCree = await resp.json();
     return candidatCree;
   } catch (erreur) {

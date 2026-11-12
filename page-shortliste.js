@@ -110,7 +110,7 @@ console.log(form)
 form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    validatestatus(form)
+    // validatestatus(form)
     validaterate(form)
     validatenote(form)
     // check errors
