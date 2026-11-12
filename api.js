@@ -80,3 +80,13 @@ export async function post(user) {
     body: JSON.stringify(user)
   })
 }
+
+export async function update(condidats, id) {
+  const resp = await fetch(`https://6af35283d2377d6c3704e90e.mockapi.io/condidats/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(condidats)
+  })
+}
+
+

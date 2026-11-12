@@ -1,6 +1,6 @@
 
 
-import { getUser, getRepo, post } from "./api.js";
+import { getUser, getRepo, post, get } from "./api.js";
 import { search } from "./page-recherche.js";
 
 
@@ -188,7 +188,11 @@ function affichage(user, repo) {
 
     } else {
         repo.forEach(repo => {
+
             const reposection = document.createElement("article");
+            let ms = new Date().getTime() - new Date(repo.updated_at).getTime()
+            let date = Math.floor(ms / (1000 * 60 * 60 * 24))
+
             reposection.className = "bg-[#0F172A]/80 border border-slate-700 rounded-2xl p-5 hover:border-[#22D3EE]/60"
             reposection.innerHTML = `  
        
@@ -224,7 +228,7 @@ function affichage(user, repo) {
                         </div>
 
                         <p class="last-update text-slate-500 text-xs mt-4">
-                            ${repo.updated_at} 
+                            miss ajour il y ${date} jours
                         </p>
 
         `
@@ -239,24 +243,29 @@ function affichage(user, repo) {
 
 }
 
-
-
-let userobject = {
-    login: user.login,
-    name: user.name,
-    avatar_url: user.avatar_url,
-    html_url: user.html_url,
-    language: repo.length > 0 ? repo[0].language : null,
-    rating: 0,
-    status: "A contacter",
-    note: "",
-    createdAt: new Date(user.created_at).toLocaleDateString(),
-    tar: user.login
-}
-
-
+let condidats = await get()
 document.querySelector("#add-shortlist").addEventListener("click", () => {
-    post(user)
+
+    let found = condidats.some(condidat => condidat.login == userinfo.login);
+    console.log(found)
+    if (!found) {
+        console.log("user not found")
+        let userobject = {
+            login: userinfo.login,
+            name: userinfo.name,
+            avatar_url: userinfo.avatar_url,
+            html_url: userinfo.html_url,
+            language: repo.length > 0 ? repo[0].language : null,
+            rating: 0,
+            status: "A contacter",
+            note: "",
+            createdAt: new Date(userinfo.created_at).toLocaleDateString(),
+        }
+        post(userobject)
+        
+        condidats.push(userobject)
+    }
+
 })
 
 

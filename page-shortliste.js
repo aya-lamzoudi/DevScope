@@ -1,20 +1,32 @@
 import { popup } from "../interface.js";
-import { get } from "./api.js";
+import { get, update } from "./api.js";
 import { validatestatus, validaterate, validatenote } from "./validation.js";
 
 let condidats = await get()
-let id;
+let username;
 
 let section = document.querySelector("#devlopper-list");
-condidats.forEach(condidat => {
 
-    let article = document.createElement("article")
-    article.className = `devlopper-card flex gap-5 rounded-2xl border border-slate-700/60 bg-[#082F49]/60 p-5 px-6 md:px-8
+function affichage(condidats) {
+    section.innerHTML = "";
+    condidats.forEach(condidat => {
+        const rate = document.createElement("div")
+        rate.className = "rating flex gap-0.5 text-[#A3E635] text-lg"
+
+        for (let i = 1; i <= condidat.rating; i++) {
+            let ratestar = document.createElement("i")
+            ratestar.className = "fa-solid fa-star";
+            rate.appendChild(ratestar)
+
+        }
+
+        let article = document.createElement("article")
+        article.className = `devlopper-card flex gap-5 rounded-2xl border border-slate-700/60 bg-[#082F49]/60 p-5 px-6 md:px-8
                     md:flex-row md:items-center md:justify-between hover:border-[#22D3EE]/50`;
 
-    article.innerHTML = `
+        article.innerHTML = `
     
-     <!-- developper details -->
+       <!-- developper details -->
                     <div class="devlopper-details flex min-w-0 items-center gap-5 md:gap-6">
 
                         <div class="logo shrink-0">
@@ -56,20 +68,13 @@ condidats.forEach(condidat => {
                     <div class="user-actions flex flex-wrap items-center justify-end gap-3">
 
                         <div class="user-rate flex items-center">
-                            <div class="rating flex gap-0.5
-                                text-[#A3E635] text-lg">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star-half-stroke"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
+                           <!-- rating-->
                         </div>
 
                         <button type="button"
                             class="status-btn rounded-xl border border-[#22D3EE]/50 bg-[#0891B2]/10 px-4 py-2 text-xs font-bold text-[#22D3EE] hover:bg-[#0891B2]/20">
                             <i class="fa-solid fa-circle text-[8px] mr-1"></i>
-                            À contacter
+                            ${condidat.status}
                         </button>
 
                         <button type="button" class="edit-match-btn p-2 text-slate-400 hover:text-green-400"><i
@@ -79,8 +84,14 @@ condidats.forEach(condidat => {
 
                     </div>
     `
-    section.appendChild(article)
-});
+        section.appendChild(article)
+        console.log(rate)
+        article.querySelector(".user-rate").appendChild(rate)
+    });
+}
+
+affichage(condidats);
+
 
 document.querySelector("#shortlist-count").innerText = condidats.length
 
@@ -89,8 +100,8 @@ section.addEventListener("click", (event) => {
     let condidatcard = event.target.closest("article")
     popup()
     console.log(condidatcard)
-    id= condidatcard.querySelector("#user-name").innerText;
-    console.log(id)
+    username = condidatcard.querySelector("#user-name").innerText;
+    console.log(username)
 
 })
 
@@ -111,7 +122,7 @@ form.addEventListener("submit", function (event) {
     event.preventDefault();
 
     // validatestatus(form)
-    validaterate(form)
+    // validaterate(form)
     validatenote(form)
     // check errors
 
@@ -125,14 +136,30 @@ form.addEventListener("submit", function (event) {
 
 
     if (!haserror) {
-        condidats.sort(cand=>{
-           if( cand.name==id){
-             
-            }
-        })
 
+        condidats.forEach(cond => {
+            if (cond.login === username.trim()) {
+                console.log(cond);
+                cond.note = form.querySelector("#note").value
+                cond.rating = form.querySelector("#rating").value
+                cond.status = form.querySelector("#status").value
+                console.log(cond);
+                update(cond, cond.id);
+            }
+        }
+        )
+
+        affichage(condidats);
+        popup()
 
 
     }
 
+
+
+
+
+
 })
+
+console.log(condidats)
