@@ -1,6 +1,6 @@
 
 
-import { getUser, getRepo } from "./api.js";
+import { getUser, getRepo, post } from "./api.js";
 
 
 
@@ -238,34 +238,11 @@ function affichage(user, repo) {
 
     });
     console.log("hey")
-    
-    
+
 }
-document.querySelector("#add-shortlist").addEventListener("click",()=>{
-   post()
+
+document.querySelector("#add-shortlist").addEventListener("click", () => {
+    post(user)
 })
 
-let userobject = {
-    login: user.login,
-    name:user.name,
-    avatar_url: user.avatar_url,
-    html_url: user.html_url,
-    language: repo.length > 0 ? repo[0].language : null,
-    rating: 3,
-    status: "A contacter",
-    note: "",
-    createdAt: user.created_at
-}
-
-
-async function post(){
-   const resp = await fetch("https://6af35283d2377d6c3704e90e.mockapi.io/condidats", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userobject)
-    })
-
-    const candidatCree = await resp.json();
-      console.log(candidatCree)
-}
 

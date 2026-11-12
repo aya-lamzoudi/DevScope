@@ -9,7 +9,7 @@
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <link rel="stylesheet" href="style.css">
     <script src="page-shortliste.js" type="module"></script>
     <title>DevScope applocation</title>
@@ -22,9 +22,9 @@
                 max-[767px]:flex-wrap max-[767px]:h-auto max-[767px]:px-2 max-[767px]:py-2 rounded-full">
             <!-- Logo -->
             <div class="logo flex gap-2 items-center shrink-0">
-              <a href="./index.html"> 
-                 <img src="./img/logo.png" alt="logo" class="w-[30px] h-[30px] rounded-full">
-                 </a>
+                <a href="./index.html">
+                    <img src="./img/logo.png" alt="logo" class="w-[30px] h-[30px] rounded-full">
+                </a>
                 <a href="./index.html">
                     <p class="text-gray-50 font-bold max-[767px]:hidden">DeveScope</p>
                 </a>
@@ -50,12 +50,12 @@
 
 
     <!-- MAIN -->
-    <main class="min-h-screen bg-[#0F172A] text-white pt-[60px] max-[767px]:pt-[100px] ">
+    <main class="min-h-screen bg-[#0F172A] text-white max-[767px]:pt-[100px] ">
 
         <div class="shortlist mx-auto max-w-[1600px] flex flex-col gap-7 px-4 py-6 md:px-8">
 
             <!-- TITLE -->
-            <section class="flex flex-col gap-2">
+            <section class="flex flex-col gap-2 ">
 
                 <h1 class="text-4xl font-bold text-[#22D3EE] max-[767px]:text-3xl">
                     Ma shortlist
@@ -110,7 +110,7 @@
             class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm hidden">
 
             <div class="modal  w-full max-w-xl items-center max-h-[90vh] overflow-y-auto
-        rounded-2xl border border-slate-700/60 bg-[#082F49] p-5 sm:p-6 shadow-2xl">
+                 rounded-2xl border border-slate-700/60 bg-[#082F49] p-5 sm:p-6 shadow-2xl">
 
                 <!-- HEADER -->
                 <div class="mb-5 flex items-start justify-between gap-3">
@@ -129,7 +129,7 @@
                         </h2>
                     </div>
 
-                    <button type="button" id="close-match-btn" aria-label="Fermer"
+                    <button type="button" id="close-btn" aria-label="Fermer"
                         class="h-10 w-10 items-center justify-center rounded-lg bg-slate-800 text-xl text-white hover:bg-slate-700 ">
                         &times;
                     </button>
@@ -145,14 +145,13 @@
                         </label>
 
                         <select id="status" name="status" class="w-full rounded-xl border border-slate-600/60 bg-slate-800/80
-                    px-4 py-3 text-sm text-white outline-none focus:border-[#22D3EE]">
+                         px-4 py-3 text-sm text-white outline-none focus:border-[#22D3EE]">
 
-                            <option value="" disabled>Choisir un statut</option>
+                            <option value="" disabled selected>Choisir un statut</option>
                             <option value="A contacter">À contacter</option>
-                            <option value="En cours">En cours</option>
-                            <option value="Accepté">Accepté</option>
                             <option value="Refusé">Refusé</option>
                         </select>
+                        <p id="status-err" class="message mt-2 text-sm text-red-400"></p>
                     </div>
 
                     <!-- rating -->
@@ -162,15 +161,16 @@
                         </label>
 
                         <select id="rating" name="rating" class="w-full rounded-xl border border-slate-600/60 bg-slate-800/80
-                    px-4 py-3 text-sm text-white outline-none focus:border-[#22D3EE]">
+                           px-4 py-3 text-sm text-white outline-none focus:border-[#22D3EE]">
 
-                            <option value="" disabled>Choisir une note</option>
+                            <option value="" disabled selected>Choisir une note</option>
                             <option value="1"> ★ 1 / 5 </option>
                             <option value="2">★★ 2 / 5</option>
                             <option value="3">★★★ 3 / 5</option>
                             <option value="4">★★★★ 4 / 5</option>
                             <option value="5">★★★★★ 5 / 5</option>
                         </select>
+                        <p id="rate-err" class="message mt-2 text-sm text-red-400"></p>
                     </div>
 
                     <!-- interne note -->
@@ -183,18 +183,19 @@
                             placeholder="Add an internal note about this candidate..." class="w-full resize-none rounded-xl border border-slate-600/60 bg-slate-800/80 px-4 py-3 text-sm text-white
                          placeholder:text-slate-500 outline-none focus:border-[#22D3EE]"></textarea>
                     </div>
+                    <p id="note-err" class="message mt-2 text-sm text-red-400"></p>
 
                     <!-- ACTIONS -->
                     <div class="flex justify-end gap-3 pt-2">
 
-                        <button type="reset" id="modal-cancel" class="rounded-xl bg-slate-800 px-5 py-3 text-sm font-semibold
+                        <button type="reset" id="popup-cancel" class="rounded-xl bg-slate-800 px-5 py-3 text-sm font-semibold
                         text-slate-300 transition hover:bg-slate-700">
                             Annuler
                         </button>
 
                         <button type="submit" id="modal-submit" class="rounded-xl bg-gradient-to-r from-[#22D3EE] to-pink-500
                     px-6 py-3 text-sm font-bold text-white shadow-lg hover:scale-[1.02]">
-                          
+
                             Enregistrer
                         </button>
 
@@ -227,7 +228,9 @@
                         </h2>
 
                         <p class="devlopper-username mt-1 text-sm text-slate-400">
-                            @aya-lamzoudi
+                            <span id="user-name">
+                                @aya-lamzoudi
+                            </span>
 
                             <span
                                 class="lang rounded-lg bg-[#0E7490]/30 px-3 py-1 text-xs font-semibold text-[#22D3EE]">

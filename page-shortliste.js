@@ -1,17 +1,9 @@
-
-
-async function get() {
-    try {
-        const resp = await fetch("https://6af35283d2377d6c3704e90e.mockapi.io/condidats")
-        if (!resp) throw new erreur("error: ", resp.status);
-        const candidatCree = await resp.json();
-        return candidatCree;
-    } catch (erreur) {
-        console.log("errour fitch data")
-    }
-}
+import { popup } from "../interface.js";
+import { get } from "./api.js";
+import { validatestatus, validaterate, validatenote } from "./validation.js";
 
 let condidats = await get()
+let id;
 
 let section = document.querySelector("#devlopper-list");
 condidats.forEach(condidat => {
@@ -37,7 +29,10 @@ condidats.forEach(condidat => {
                             </h2>
 
                             <p class="devlopper-username mt-1 text-sm text-slate-400">
+
+                                <span id="user-name">
                                 ${condidat.login}
+                                </span>
 
                                 <span
                                     class="lang rounded-lg bg-[#0E7490]/30 px-3 py-1 text-xs font-semibold text-[#22D3EE]">
@@ -88,3 +83,56 @@ condidats.forEach(condidat => {
 });
 
 document.querySelector("#shortlist-count").innerText = condidats.length
+
+section.addEventListener("click", (event) => {
+
+    let condidatcard = event.target.closest("article")
+    popup()
+    console.log(condidatcard)
+    id= condidatcard.querySelector("#user-name").innerText;
+    console.log(id)
+
+})
+
+
+// add event lisner to the popup so we can close & annuler:
+document.querySelector("#popup").addEventListener("click", function (event) {
+
+    if (event.target.id == "close-btn" || event.target.id == "popup-cancel") {
+        popup();
+    }
+})
+
+
+let form = document.querySelector("#form-condidat");
+console.log(form)
+//edit match form:
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    validatestatus(form)
+    validaterate(form)
+    validatenote(form)
+    // check errors
+
+    let errors = form.querySelectorAll(".message");
+    let haserror = false;
+    errors.forEach(error => {
+        if (error.innerText !== "") {
+            haserror = true;
+        }
+    });
+
+
+    if (!haserror) {
+        condidats.sort(cand=>{
+           if( cand.name==id){
+             
+            }
+        })
+
+
+
+    }
+
+})
