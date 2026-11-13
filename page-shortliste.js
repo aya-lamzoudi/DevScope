@@ -1,6 +1,6 @@
 import { popup } from "../interface.js";
 import { get, update } from "./api.js";
-import { validatestatus, validaterate, validatenote } from "./validation.js";
+import {  validatenote } from "./validation.js";
 
 let condidats = await get()
 let username;
@@ -8,6 +8,7 @@ let username;
 let section = document.querySelector("#devlopper-list");
 
 function affichage(condidats) {
+  
     section.innerHTML = "";
     condidats.forEach(condidat => {
         const rate = document.createElement("div")

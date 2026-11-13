@@ -37,6 +37,7 @@ export async function getRepo(username) {
 
 
 export async function get() {
+  
   try {
     const resp = await fetch("https://6af35283d2377d6c3704e90e.mockapi.io/condidats")
     if (!resp.ok) throw new erreur("error: ", resp.status);
