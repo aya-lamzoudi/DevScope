@@ -99,6 +99,9 @@ section.addEventListener("click", (event) => {
 
     let condidatcard = event.target.closest("article")
     popup()
+    form.querySelector("#note").value = "";
+    // form.querySelector("#rating").value = condidatcard.document.querySelectorAll("i").length
+    // form.querySelector("#status").value = condidatcard.document.querySelector(".status").innerText
     console.log(condidatcard)
     username = condidatcard.querySelector("#user-name").innerText;
     console.log(username)

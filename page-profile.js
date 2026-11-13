@@ -12,9 +12,11 @@ const repo = await getRepo(name)
 console.log(userinfo)
 
 if (userinfo === null) {
+    document.querySelector(".chargement").classList.add("hidden");
     console.log("not found")
     document.querySelector(".not-found").classList.remove("hidden");
 } else {
+    document.querySelector(".chargement").classList.add("hidden");
     let user = {
         login: userinfo.login,
         name: userinfo.name ?? "aucun nom mentionné",
