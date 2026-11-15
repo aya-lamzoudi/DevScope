@@ -1,4 +1,4 @@
-import { popup, showsuccess ,color} from "../interface.js";
+import { popup, showsuccess, color } from "./interface.js";
 import { get, update, deletecondida } from "./api.js";
 import { validatenote, } from "./validation.js";
 
@@ -86,7 +86,7 @@ function affichage(condidats) {
 
                     </div>
     `
-        color(article,condidat)
+        color(article, condidat)
         section.appendChild(article)
         console.log(rate)
         article.querySelector(".user-rate").appendChild(rate)
