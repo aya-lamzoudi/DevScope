@@ -1,10 +1,10 @@
 
 
 export async function getUser(username) {
-   document.querySelector(".chargement").classList.remove("hidden");
+  document.querySelector(".chargement").classList.remove("hidden");
   try {
     const response = await fetch(`https://api.github.com/users/${username}`);
-  
+
     if (response.status === 404) {
 
       return null;
@@ -37,7 +37,7 @@ export async function getRepo(username) {
 
 
 export async function get() {
-  
+
   try {
     const resp = await fetch("https://6af35283d2377d6c3704e90e.mockapi.io/condidats")
     if (!resp.ok) throw new erreur("error: ", resp.status);
@@ -65,10 +65,10 @@ export async function update(condidats, id) {
 }
 
 
-export async function deletecondida( id) {
+export async function deletecondida(id) {
   const resp = await fetch(`https://6af35283d2377d6c3704e90e.mockapi.io/condidats/${id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
-  
+
   })
 }

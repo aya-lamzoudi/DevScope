@@ -29,7 +29,7 @@ export function showerror(message) {
     }, 4000);
 }
 
-export function color(article, condidat) {
+export function color(article, condidat, status) {
     const statusColors = {
         "A contacter": " border-[#22D3EE]/50 bg-[#0891B2]/10 text-[#22D3EE] hover:bg-[#0891B2]/20",
         "entretien": "border-purple-500/50 bg-purple-500/10 text-purple-400 hover:bg-purple-500/20",
@@ -40,5 +40,6 @@ export function color(article, condidat) {
     const statusBtn = article.querySelector("#status");
 
     statusBtn.className = `status-btn rounded-xl border px-4 py-2 text-xs font-bold ${statusColors[condidat.status]}`
+
 
 }
