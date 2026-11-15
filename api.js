@@ -65,3 +65,10 @@ export async function update(condidats, id) {
 }
 
 
+export async function deletecondida( id) {
+  const resp = await fetch(`https://6af35283d2377d6c3704e90e.mockapi.io/condidats/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    // body: JSON.stringify(condidats)
+  })
+}

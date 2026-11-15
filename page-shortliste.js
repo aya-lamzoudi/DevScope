@@ -1,14 +1,15 @@
 import { popup } from "../interface.js";
-import { get, update } from "./api.js";
-import {  validatenote } from "./validation.js";
+import { get, update, deletecondida } from "./api.js";
+import { validatenote, } from "./validation.js";
 
 let condidats = await get()
+console.log(condidats)
 let username;
 
 let section = document.querySelector("#devlopper-list");
 
 function affichage(condidats) {
-  
+
     section.innerHTML = "";
     condidats.forEach(condidat => {
         const rate = document.createElement("div")
@@ -22,6 +23,7 @@ function affichage(condidats) {
         }
 
         let article = document.createElement("article")
+        article.dataset.id = condidat.id
         article.className = `devlopper-card flex gap-5 rounded-2xl border border-slate-700/60 bg-[#082F49]/60 p-5 px-6 md:px-8
                     md:flex-row md:items-center md:justify-between hover:border-[#22D3EE]/50`;
 
@@ -78,9 +80,9 @@ function affichage(condidats) {
                             ${condidat.status}
                         </button>
 
-                        <button type="button" class="edit-match-btn p-2 text-slate-400 hover:text-green-400"><i
+                        <button type="button" id="edit-btn" class="edit-match-btn p-2 text-slate-400 hover:text-green-400"><i
                                 class="fa-solid fa-pen" aria-hidden="true"></i></button>
-                        <button type="button" class="delete-match-btn p-2 text-slate-400 hover:text-red-400"><i
+                        <button type="button"  id="delete-btn" class="delete-match-btn p-2 text-slate-400 hover:text-red-400"><i
                                 class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
 
                     </div>
@@ -99,13 +101,38 @@ document.querySelector("#shortlist-count").innerText = condidats.length
 section.addEventListener("click", (event) => {
 
     let condidatcard = event.target.closest("article")
-    popup()
-    form.querySelector("#note").value = "";
-    // form.querySelector("#rating").value = condidatcard.document.querySelectorAll("i").length
-    // form.querySelector("#status").value = condidatcard.document.querySelector(".status").innerText
     console.log(condidatcard)
-    username = condidatcard.querySelector("#user-name").innerText;
-    console.log(username)
+    username = condidatcard.querySelector("#user-name").innerText.trim();
+    console.log(username);
+
+    if (event.target.closest("button").id == "edit-btn") {
+        popup()
+        condidats.forEach(condidat => {
+            console.log(condidat.login)
+            console.log(condidatcard.querySelector("#user-name").innerText)
+            if (condidat.login.trim() == username) {
+                console.log(condidat)
+                form.querySelector("#note").value = condidat.note;
+                form.querySelector("#rating").value = condidat.rating
+                form.querySelector("#status").value = condidat.status
+            }
+        });
+
+
+        // console.log(username)
+
+    }
+    if (event.target.closest("button").id == "delete-btn") {
+        console.log("delete")
+        console.log(username)
+        let id = condidatcard.dataset.id
+        deletecondida(id)
+        const index = condidats.findIndex(c => c.id === id);
+        console.log(index)
+        condidats.splice(index, 1)
+        console.log(condidats)
+        affichage(condidats)
+    }
 
 })
 
