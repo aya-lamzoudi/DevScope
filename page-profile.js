@@ -2,6 +2,7 @@
 
 import { getUser, getRepo, post, get } from "./api.js";
 import { search } from "./page-recherche.js";
+import { showsuccess, showerror } from "../interface.js";
 
 
 const name = new URLSearchParams(window.location.search).get('name');
@@ -266,6 +267,9 @@ document.querySelector("#add-shortlist").addEventListener("click", () => {
         post(userobject)
         
         condidats.push(userobject)
+        showsuccess("Candidate is added successfully!");
+    }else{
+        showerror("Candidate is already in the shortliste")
     }
 
 })

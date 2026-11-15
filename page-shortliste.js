@@ -1,10 +1,9 @@
-import { popup } from "../interface.js";
+import { popup, showsuccess ,color} from "../interface.js";
 import { get, update, deletecondida } from "./api.js";
 import { validatenote, } from "./validation.js";
 
 let condidats = await get()
-console.log(condidats)
-let username;
+let id;
 
 let section = document.querySelector("#devlopper-list");
 
@@ -74,22 +73,25 @@ function affichage(condidats) {
                            <!-- rating-->
                         </div>
 
-                        <button type="button"
-                            class="status-btn rounded-xl border border-[#22D3EE]/50 bg-[#0891B2]/10 px-4 py-2 text-xs font-bold text-[#22D3EE] hover:bg-[#0891B2]/20">
+                        <button type="button" id="status"
+                            class="status-btn  border-[#22D3EE]/50 bg-[#0891B2]/10 px-4 py-2 text-xs text-[#22D3EE] hover:bg-[#0891B2]/20">
                             <i class="fa-solid fa-circle text-[8px] mr-1"></i>
                             ${condidat.status}
                         </button>
 
-                        <button type="button" id="edit-btn" class="edit-match-btn p-2 text-slate-400 hover:text-green-400"><i
+                        <button type="button" id="edit-btn" class="edit-btn p-2 text-slate-400 hover:text-green-400"><i
                                 class="fa-solid fa-pen" aria-hidden="true"></i></button>
-                        <button type="button"  id="delete-btn" class="delete-match-btn p-2 text-slate-400 hover:text-red-400"><i
+                        <button type="button"  id="delete-btn" class="delete-btn p-2 text-slate-400 hover:text-red-400"><i
                                 class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
 
                     </div>
     `
+        color(article,condidat)
         section.appendChild(article)
         console.log(rate)
         article.querySelector(".user-rate").appendChild(rate)
+        console.log(condidat.status)
+
     });
 }
 
@@ -101,16 +103,15 @@ document.querySelector("#shortlist-count").innerText = condidats.length
 section.addEventListener("click", (event) => {
 
     let condidatcard = event.target.closest("article")
-    console.log(condidatcard)
-    username = condidatcard.querySelector("#user-name").innerText.trim();
-    console.log(username);
+
+    id = condidatcard.dataset.id
+
 
     if (event.target.closest("button").id == "edit-btn") {
         popup()
         condidats.forEach(condidat => {
-            console.log(condidat.login)
-            console.log(condidatcard.querySelector("#user-name").innerText)
-            if (condidat.login.trim() == username) {
+
+            if (condidat.id == id) {
                 console.log(condidat)
                 form.querySelector("#note").value = condidat.note;
                 form.querySelector("#rating").value = condidat.rating
@@ -123,15 +124,16 @@ section.addEventListener("click", (event) => {
 
     }
     if (event.target.closest("button").id == "delete-btn") {
-        console.log("delete")
-        console.log(username)
-        let id = condidatcard.dataset.id
+
+
+
         deletecondida(id)
         const index = condidats.findIndex(c => c.id === id);
         console.log(index)
         condidats.splice(index, 1)
-        console.log(condidats)
+        showsuccess("Candidate deleted successfully!");
         affichage(condidats)
+
     }
 
 })
@@ -169,7 +171,7 @@ form.addEventListener("submit", function (event) {
     if (!haserror) {
 
         condidats.forEach(cond => {
-            if (cond.login === username.trim()) {
+            if (cond.id === id) {
                 console.log(cond);
                 cond.note = form.querySelector("#note").value
                 cond.rating = form.querySelector("#rating").value
@@ -182,7 +184,7 @@ form.addEventListener("submit", function (event) {
 
         affichage(condidats);
         popup()
-
+        showsuccess("Candidate updated successfully!")
 
     }
 
