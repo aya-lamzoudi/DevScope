@@ -1,38 +1,34 @@
 
 
-export async function getUser(username) {
-  document.querySelector(".chargement").classList.remove("hidden");
-  try {
-    const response = await fetch(`https://api.github.com/users/${username}`);
 
-    if (response.status === 404) {
-
-      return null;
-    }
-
-    if (!response.ok) {
-      throw new Error("Error " + response.status);
-    }
-
-    return await response.json();
-
-  } catch (error) {
-    console.error("Failed to fetch data:", error.message);
-
-  }
-}
-
-export async function getRepo(username) {
+export async function getdata(username) {
 
   try {
-    const responce = await fetch(`https://api.github.com/users/${username}/repos`);
 
-    if (!responce.ok) throw new Error("erour" + responce.status);
-    return responce.json();
+    const urluser = `https://api.github.com/users/${username}`;
+    const urlrepo = `https://api.github.com/users/${username}/repos`;
+    const user = fetch(urluser).then(res => {
+      if (!res.ok) {
+        document.querySelector(".chargement").classList.add("hidden");
+        console.log("not found")
+        document.querySelector(".not-found").classList.remove("hidden");
+         throw new Error("User not found", res.status);
+      }
+      return res.json();
+    })
+    const repo = fetch(urlrepo).then(res => {
+      if (!res.ok) throw new Error("repo not found", res.status);
+      console.log(res.json)
+      return res.json();
+    })
+    const data = await Promise.all([user, repo])
+    return data
   } catch (error) {
     console.error("Failed to fetch data:", error.message);
   }
+
 }
+
 
 
 
@@ -72,3 +68,44 @@ export async function deletecondida(id) {
 
   })
 }
+
+
+
+
+
+
+
+
+// export async function getUser(username) {
+//   document.querySelector(".chargement").classList.remove("hidden");
+//   try {
+//     const response = await fetch(`https://api.github.com/users/${username}`);
+
+//     if (response.status === 404) {
+
+//       return null;
+//     }
+
+//     if (!response.ok) {
+//       throw new Error("Error " + response.status);
+//     }
+
+//     return await response.json();
+
+//   } catch (error) {
+//     console.error("Failed to fetch data:", error.message);
+
+//   }
+// }
+
+// export async function getRepo(username) {
+
+//   try {
+//     const responce = await fetch(`https://api.github.com/users/${username}/repos`);
+
+//     if (!responce.ok) throw new Error("erour" + responce.status);
+//     return responce.json();
+//   } catch (error) {
+//     console.error("Failed to fetch data:", error.message);
+//   }
+// }

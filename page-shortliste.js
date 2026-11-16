@@ -127,3 +127,6 @@ filter.addEventListener("click", (e) => {
     status = e.target.dataset.filter
     affichage(condidats);
 })
+
+
+
