@@ -1,10 +1,30 @@
+
+import { recherch, language } from "./page-profile.js"
+
+function filter(repo) {
+    document.querySelectorAll(`.filter-btn`).forEach(btn => {
+        btn.classList.remove("text-[#082F49]", "bg-[#22D3EE]")
+    });
+
+    document.querySelector(`[data-filter="${language}"]`).classList.add("text-[#082F49]", "bg-[#22D3EE]")
+    return repo.filter(
+        rep => rep.name.toLowerCase().includes(recherch.toLowerCase()) && 
+        (language == "tous" || language == rep.language)
+
+    )
+}
+
 export function affichage(user, repo) {
+    repo = filter(repo)
+
+    
     document.querySelector("#search-profile").value = user.login
-    document.querySelector(".profile-page").innerHTML = `
+    document.querySelector(".repo-nbr").innerText=repo.length
+    document.querySelector("#container-section").innerHTML = `
 
 
             <!-- PROFILE AND REPOSITORIES -->
-            <section id="container-section" class="grid grid-cols-1 lg:grid-cols-[345px_1fr] gap-6 items-start">
+            
 
                 <!-- PROFILE CARD -->
                 <div class="profile-card bg-[#082F49]/70 border border-slate-600/40
@@ -128,38 +148,39 @@ export function affichage(user, repo) {
                 </div>
                 
    
-   `
-    const repocaitainer = document.createElement("div")
-    repocaitainer.className = " grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-[112vh] p-2 border border-solid-1 border-[#22D3EE] rounded-xl";
-    repocaitainer.id = "repos-container";
+     `
+    const articlecontainer = document.querySelector("#article-container")
+    articlecontainer.innerHTML = ""
+    
+
     if (repo.length == 0) {
         console.log(repo.length)
         const reposection = document.createElement("article");
+        reposection.className = "col-span-full col-start-1 w-full"
         reposection.innerHTML = `  
        
                <!-- si there is no repo -->
-                <div id="repos-empty" class=" text-center py-10 ">
-
+                <div id="repos-empty" class="text-center py-10 col-span-full">
+                   
                     <i class="fa-regular fa-folder-open
                             text-4xl text-[#22D3EE] mb-4"></i>
 
-                    <p class="text-slate-300">
+                    <p class="text-slate-300 ">
                         Aucun dépôt trouvé
                     </p>
-
+                  
                 </div>
         `
-        repocaitainer.appendChild(reposection);
+        articlecontainer.appendChild(reposection);
 
     } else {
-        let devnbr=document.createElement("h2")
-       devnbr.innerHTML=` Depots : <span class="text-3xl font-extrabold text-[#22D3EE]">
-         ${repo.length}
-        </span>`
-       devnbr.className="col-span-full col-start-1 w-full p-4 text-2xl z-55 "
-       repocaitainer.appendChild(devnbr)
+
+
+
+        //creat repos
 
         repo.forEach(repo => {
+
 
             const reposection = document.createElement("article");
             let ms = new Date().getTime() - new Date(repo.updated_at).getTime()
@@ -204,13 +225,13 @@ export function affichage(user, repo) {
                         </p>
 
         `
-            repocaitainer.appendChild(reposection);
+            articlecontainer.appendChild(reposection);
 
 
         });
 
     }
-    document.querySelector("#container-section").appendChild(repocaitainer);
+
 
 
 }

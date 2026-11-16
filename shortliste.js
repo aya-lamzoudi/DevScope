@@ -9,7 +9,8 @@ function filter(condidat) {
 
     document.querySelector(`[data-filter="${status}"]`).classList.add("text-[#082F49]", "bg-[#22D3EE]")
     return condidat.filter(
-        c => c.login.includes(recherch) && status == "tous" || status == c.status
+        c => c.login.includes(recherch) &&
+            (status == "tous" || status == c.status)
 
     )
 }

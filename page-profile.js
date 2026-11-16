@@ -1,11 +1,15 @@
 
 import { affichage } from "./profile.js";
-import { getUser, getRepo, post, get, getdata } from "./api.js";
+import { post, get, getdata } from "./api.js";
 import { search } from "./page-recherche.js";
 import { showsuccess, showerror } from "./interface.js";
 
 const name = new URLSearchParams(window.location.search).get('name');
 
+//recherch & filter
+let searchinput = document.querySelector("#search-repo")
+let filter = document.querySelector("#filter")
+export let recherch="", language = "tous"
 
 
 // function of the search
@@ -63,10 +67,33 @@ getdata(name)
 
         })
 
+
+        // add event lister for tri & seatch
+
+        //recherche
+
+        searchinput.addEventListener("input", () => {
+            recherch = searchinput.value.trim()
+            affichage(user, repo)
+        })
+
+        //filter
+
+        filter.addEventListener("click", (e) => {
+
+            language = e.target.dataset.filter
+            console.log(language)
+            affichage(user, repo)
+        })
+
+
+
     })
     .catch(error => {
         console.error(error)
     });
+
+
 
 
 

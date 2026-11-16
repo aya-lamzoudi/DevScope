@@ -7,15 +7,20 @@ export async function getdata(username) {
 
     const urluser = `https://api.github.com/users/${username}`;
     const urlrepo = `https://api.github.com/users/${username}/repos`;
-    const user = fetch(urluser).then(res => {
+    //users
+    const user = fetch(urluser)
+      .then(res => {
       if (!res.ok) {
+        throw new Error("User not found", res.status);
+      }
+      if (res.status == 404) {
         document.querySelector(".chargement").classList.add("hidden");
         console.log("not found")
         document.querySelector(".not-found").classList.remove("hidden");
-         throw new Error("User not found", res.status);
       }
       return res.json();
     })
+    //repo
     const repo = fetch(urlrepo).then(res => {
       if (!res.ok) throw new Error("repo not found", res.status);
       console.log(res.json)

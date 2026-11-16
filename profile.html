@@ -93,10 +93,78 @@
             </p>
 
         </div>
-       <!-- the profile -->
-        <div class="profile-page mx-auto flex justify-center max-w-[1600px] flex-col gap-10 px-4 py-6 md:px-8 ">
+        <!-- the profile -->
+        <div class="profile-page mx-auto flex justify-center max-w-[1600px]  gap-10 px-4 py-6 md:px-8 ">
 
             <!-- adding condidat here -->
+            <!-- profile -->
+            <section id="container-section" class="grid grid-cols-1 lg:grid-cols-[345px_1fr] gap-6 items-start">
+
+            </section>
+            <!-- repo -->
+            <section id="repos-container"
+                class=" flex flex-col gap-2 overflow-y-auto max-h-[112vh] px-2 border border-solid-1 border-[#22D3EE] rounded-xl">
+                <h2> Depots :
+                    <span class="repo-nbr text-3xl font-extrabold text-[#22D3EE]">
+                        0
+                    </span>
+                </h2>
+                <section id="filter-recherch"
+                    class="flex justify-between items-center gap-4 flex-wrap col-span-full col-start-1 w-full px-4 text-2xl ">
+                    <!-- filter -->
+                    <div id=filter class="flex items-center flex-wrap gap-2
+                    bg-[#082F49] border border-slate-700
+                    rounded-full p-1.5">
+
+                        <button type="button" data-filter="tous" class="filter-btn rounded-full px-5 py-2
+                        text-sm font-semibold">
+                            Tous
+                        </button>
+
+                        <button type="button" data-filter="JavaScript" class="filter-btn rounded-full px-5 py-2
+                        text-sm font-semibold hover:bg-slate-700">
+                            JavaScript
+                        </button>
+
+                        <button type="button" data-filter="C++" class="filter-btn rounded-full px-5 py-2
+                        text-sm font-semibold hover:bg-slate-700">
+                            C++
+                        </button>
+                        <button type="button" data-filter="Python" class="filter-btn rounded-full px-5 py-2
+                        text-sm font-semibold hover:bg-slate-700">
+                           Python
+                        </button>
+
+                        <button type="button" data-filter="PHP" class="filter-btn rounded-full px-5 py-2
+                        text-sm font-semibold hover:bg-slate-700">
+                            PHP
+                        </button>
+
+                        <button type="button" data-filter="HTML" class="filter-btn rounded-full px-5 py-2
+                        text-sm font-semibold hover:bg-slate-700">
+                            HTML
+                        </button>
+
+                    </div>
+                    <!-- Recherche -->
+                    <div class="flex items-center gap-3
+                    bg-[#082F49] border border-slate-700
+                    rounded-xl px-4 h-[48px] w-[320px]
+                    max-[767px]:w-full">
+
+                        <i class="fa-solid fa-magnifying-glass
+                        text-[#22D3EE]"></i>
+
+                        <input type="search" id="search-repo" placeholder="Rechercher un repo..." class="w-full bg-transparent text-white
+                        outline-none text-sm
+                        placeholder:text-slate-400">
+
+                    </div>
+                </section>
+                <section id="article-container" class=" grid grid-cols-1 md:grid-cols-2 gap-2 overflow-y-auto max-h-[112vh] px-2 " >
+
+                </section>
+            </section>
 
 
         </div>
@@ -118,7 +186,7 @@
 
             <!-- Message -->
             <div>
-                
+
                 <p id="success-text" class="text-sm text-green-700">
 
                 </p>
@@ -142,7 +210,7 @@
 
             <!-- Message -->
             <div>
-                
+
                 <p id="error-text" class="text-sm text-red-700">
                     Something went wrong.
                 </p>
