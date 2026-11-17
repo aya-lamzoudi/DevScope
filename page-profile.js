@@ -15,6 +15,8 @@ export let recherch="", language = "tous"
 // function of the search
 search()
 
+
+
 getdata(name)
     .then(async (data) => {
 

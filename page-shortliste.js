@@ -4,8 +4,9 @@ import { popup, showsuccess } from "./interface.js";
 import { get, update, deletecondida } from "./api.js";
 import { validatenote } from "./validation.js";
 
-const condidats = await get()
+let condidats = await get()
 let id;
+let btndisable;
 let section = document.querySelector("#devlopper-list");
 const form = document.querySelector("#form-condidat");
 
@@ -28,6 +29,9 @@ section.addEventListener("click", (event) => {
 
 
     if (event.target.closest("button").id == "edit-btn") {
+        btndisable = event.target.closest("button")
+        btndisable.disabled = true;
+
         popup()
         condidats.forEach(condidat => {
 
@@ -45,24 +49,29 @@ section.addEventListener("click", (event) => {
     }
     if (event.target.closest("button").id == "delete-btn") {
 
-
+        event.target.closest("button").disabled = true;
         const confirm = document.querySelector("#deleteModal");
         confirm.querySelector("#candidateName").innerText = condidatcard.querySelector("#user-name").innerText
         confirm.classList.remove("hidden");
 
         confirm.querySelector("#cancelDelete").addEventListener("click", () => {
-            confirm.classList.add("hidden");  //cencel the delete             
+            confirm.classList.add("hidden");  //cencel the delete   
+            event.target.closest("button").disabled = false
 
         })
-        confirm.querySelector("#confirmDelete").addEventListener("click", () => {
+        confirm.querySelector("#confirmDelete").addEventListener("click", async () => {
 
-            deletecondida(id)
-            const index = condidats.findIndex(c => c.id === id);
-            console.log(index)
-            condidats.splice(index, 1)
-            confirm.classList.add("hidden");
-            showsuccess("Candidate deleted successfully!");
+
+            await deletecondida(id)
+
+            condidats = await get()
+
             affichage(condidats)
+            showsuccess("Candidate deleted successfully!");
+            confirm.classList.add("hidden");
+
+            event.target.closest("button").disabled = false
+
         })
 
 
@@ -80,11 +89,12 @@ document.querySelector("#popup").addEventListener("click", function (event) {
 
     if (event.target.id == "close-btn" || event.target.id == "popup-cancel") {
         popup();
+        btndisable.disabled = false;
     }
 })
 
 //edit condidat form:
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     validatenote(form)
@@ -101,19 +111,19 @@ form.addEventListener("submit", function (event) {
 
     if (!haserror) {
 
-        condidats.forEach(cond => {
+        condidats.forEach(async (cond) => {
             if (cond.id === id) {
-                console.log(cond);
                 cond.note = form.querySelector("#note").value
                 cond.rating = form.querySelector("#rating").value
                 cond.status = form.querySelector("#status").value
-                console.log(cond);
-                update(cond, cond.id);
+                await update(cond, cond.id);
             }
-        }
-        )
-
+        })
+        condidats = await get()
         affichage(condidats);
+
+        btndisable.disabled = false;
+
         popup()
         showsuccess("Candidate updated successfully!")
 
