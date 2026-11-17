@@ -47,6 +47,7 @@ section.addEventListener("click", (event) => {
 
 
         const confirm = document.querySelector("#deleteModal");
+        confirm.querySelector("#candidateName").innerText = condidatcard.querySelector("#user-name").innerText
         confirm.classList.remove("hidden");
 
         confirm.querySelector("#cancelDelete").addEventListener("click", () => {

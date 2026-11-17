@@ -25,7 +25,7 @@ getdata(name)
         // get condidat from mock api
         const condidats = await get()
 
-        document.querySelector(".chargement").classList.add("hidden");
+       
 
         let user = {
             login: userinfo.login,

@@ -8,18 +8,19 @@ function filter(repo) {
 
     document.querySelector(`[data-filter="${language}"]`).classList.add("text-[#082F49]", "bg-[#22D3EE]")
     return repo.filter(
-        rep => rep.name.toLowerCase().includes(recherch.toLowerCase()) && 
-        (language == "tous" || language == rep.language)
+        rep => rep.name.toLowerCase().includes(recherch.toLowerCase()) &&
+            (language == "tous" || language == rep.language)
 
     )
 }
 
 export function affichage(user, repo) {
     repo = filter(repo)
+    document.querySelector(".chargement").classList.add("hidden");
+    document.querySelector("#repos-container").classList.remove("hidden")
 
-    
     document.querySelector("#search-profile").value = user.login
-    document.querySelector(".repo-nbr").innerText=repo.length
+    document.querySelector(".repo-nbr").innerText = repo.length
     document.querySelector("#container-section").innerHTML = `
 
 
@@ -151,7 +152,7 @@ export function affichage(user, repo) {
      `
     const articlecontainer = document.querySelector("#article-container")
     articlecontainer.innerHTML = ""
-    
+
 
     if (repo.length == 0) {
         console.log(repo.length)
