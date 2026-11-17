@@ -151,7 +151,7 @@
 
         </div>
 
-
+           
 
         <!--  condidat popup -->
         <section id="popup"
@@ -255,6 +255,90 @@
                 </form>
             </div>
         </section>
+
+
+        <!-- confirmation supp modele -->
+
+        
+<!-- Confirmation Modal -->
+<div id="deleteModal"
+     class="hidden fixed inset-0 z-[100] flex items-center justify-center
+            bg-black/60 px-4">
+
+    <div class="w-full max-w-xl overflow-hidden rounded-xl bg-white shadow-2xl">
+
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between border-b border-gray-200 px-6 py-5">
+
+            <h2 class="text-2xl font-semibold text-[#1684B5]
+                       max-sm:text-lg">
+                Confirmation de la suppression
+            </h2>
+
+            
+        </div>
+
+        <!-- Modal Body -->
+        <div class="px-6 py-10">
+
+            <p class="text-lg text-gray-700 max-sm:text-base">
+                Êtes-vous sûr de vouloir supprimer ce candidat ?
+            </p>
+
+            <p class="mt-4 text-sm text-gray-500">
+                Candidat :
+                <span id="candidateName"
+                      class="font-semibold text-[#082F49]">
+                    
+                </span>
+            </p>
+
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="flex justify-end gap-4 border-t border-gray-200
+                    bg-gray-100 px-6 py-5">
+
+            <!-- Cancel Button -->
+            <button id="cancelDelete" class="rounded-md border border-gray-300 bg-white px-6 py-2.5 font-medium text-gray-700
+                           shadow-sm transition hover:bg-gray-200">
+                Non
+            </button>
+
+            <!-- Confirm Button -->
+            <button id="confirmDelete" class="rounded-md bg-[#299FD5] px-6 py-2.5 font-medium text-white shadow-sm
+                           transition hover:bg-[#1684B5] active:scale-95">
+                Oui
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- <script>
+    // Close modal
+    function closeDeleteModal() {
+        document.getElementById("deleteModal").classList.add("hidden");
+    }
+
+    // Confirm deletion
+    function confirmDelete() {
+        // Add your candidate deletion logic here
+
+        console.log("Candidate deleted!");
+
+        closeDeleteModal();
+    }
+
+    // Open modal for a specific candidate
+    function openDeleteModal(name) {
+        document.getElementById("candidateName").textContent = name;
+        document.getElementById("deleteModal").classList.remove("hidden");
+    }
+</script> -->
+
+
         <!-- success msg -->
         <div id="success-msg" class="hidden fixed top-5 right-5 z-50 flex items-center gap-3
            bg-green-50 border border-green-200 text-green-800

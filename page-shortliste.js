@@ -17,8 +17,7 @@ export let recherch = "", status = "tous"
 // afficher les condidats
 affichage(condidats);
 
-// afficher number of the condidats
-document.querySelector("#shortlist-count").innerText = condidats.length
+
 
 //add event lisner on all the condidat cards
 section.addEventListener("click", (event) => {
@@ -47,13 +46,29 @@ section.addEventListener("click", (event) => {
     if (event.target.closest("button").id == "delete-btn") {
 
 
+        const confirm = document.querySelector("#deleteModal");
+        confirm.classList.remove("hidden");
 
-        deletecondida(id)
-        const index = condidats.findIndex(c => c.id === id);
-        console.log(index)
-        condidats.splice(index, 1)
-        showsuccess("Candidate deleted successfully!");
-        affichage(condidats)
+        confirm.querySelector("#cancelDelete").addEventListener("click", () => {
+            confirm.classList.add("hidden");  //cencel the delete             
+
+        })
+        confirm.querySelector("#confirmDelete").addEventListener("click", () => {
+
+            deletecondida(id)
+            const index = condidats.findIndex(c => c.id === id);
+            console.log(index)
+            condidats.splice(index, 1)
+            confirm.classList.add("hidden");
+            showsuccess("Candidate deleted successfully!");
+            affichage(condidats)
+        })
+
+
+
+
+
+
 
     }
 

@@ -17,6 +17,10 @@ function filter(condidat) {
 
 
 export function affichage(condidats) {
+
+    // afficher number of the condidats
+    document.querySelector("#shortlist-count").innerText = condidats.length
+    
     const section = document.querySelector("#devlopper-list");
     section.innerHTML = "";
     condidats = filter(condidats)
