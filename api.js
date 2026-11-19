@@ -1,6 +1,5 @@
 
 
-
 export async function getdata(username) {
 
   try {
@@ -33,9 +32,6 @@ export async function getdata(username) {
   }
 
 }
-
-
-
 
 export async function get() {
 
