@@ -18,9 +18,104 @@ export function affichage(user, repo) {
     repo = filter(repo)
     document.querySelector(".chargement").classList.add("hidden");
     document.querySelector("#repos-container").classList.remove("hidden")
+    afficherprofile(user)
+    afficherrepo(repo)
 
-    document.querySelector("#search-profile").value = user.login
+
+}
+
+function afficherrepo(repo) {
     document.querySelector(".repo-nbr").innerText = repo.length
+
+    const articlecontainer = document.querySelector("#article-container")
+    articlecontainer.innerHTML = ""
+
+
+    if (repo.length == 0) {
+        console.log(repo.length)
+        const reposection = document.createElement("article");
+        reposection.className = "col-span-full col-start-1 w-full"
+        reposection.innerHTML = `  
+       
+               <!-- si there is no repo -->
+                <div id="repos-empty" class="text-center py-10 col-span-full">
+                   
+                    <i class="fa-regular fa-folder-open
+                            text-4xl text-[#22D3EE] mb-4"></i>
+
+                    <p class="text-slate-300 ">
+                        Aucun dépôt trouvé
+                    </p>
+                  
+                </div>
+        `
+        articlecontainer.appendChild(reposection);
+
+    } else {
+        //creat repos
+
+        repo.forEach(repo => {
+
+            let displayrepo = {
+                name: repo.name,
+                description: repo.description ?? "aucun description",
+                language: repo.language ?? "aucun language",
+                stargazers_count: repo.stargazers_count,
+                forks_count: repo.forks_count,
+            }
+            const reposection = document.createElement("article");
+            let ms = new Date().getTime() - new Date(repo.updated_at).getTime()
+            let date = Math.floor(ms / (1000 * 60 * 60 * 24))
+
+            reposection.className = "bg-[#0F172A]/80 border border-slate-700 rounded-2xl p-5 hover:border-[#22D3EE]/60"
+            reposection.innerHTML = `  
+       
+
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fa-regular fa-square text-[#22D3EE]"></i>
+
+                            <h3 class="repo-name font-bold text-white">${displayrepo.name} </h3>
+
+                        </div>
+
+                        <p class="repo-description text-sm mb-4">
+                           ${displayrepo.description} 
+                        </p>
+
+                        <div class="repo-about flex flex-wrap items-center gap-4 text-xs text-slate-300">
+
+                            <span class="repo-lang">
+                                <i class="fa-solid fa-circle text-[7px]"></i>
+                               ${displayrepo.language} 
+                            </span>
+
+                            <span class="repo-stars text-yellow-400">
+                                <i class="fa-solid fa-star"></i>
+                               ${displayrepo.stargazers_count} 
+                            </span>
+
+                            <span class="repo-forks text-[#22D3EE]">
+                                <i class="fa-solid fa-code-fork"></i>
+                               ${displayrepo.forks_count} 
+                            </span>
+
+                        </div>
+
+                        <p class="last-update text-slate-500 text-xs mt-4">
+                            miss ajour il y ${date} jours
+                        </p>
+
+        `
+            articlecontainer.appendChild(reposection);
+
+
+        });
+
+    }
+}
+
+function afficherprofile(user) {
+    document.querySelector("#search-profile").value = user.login
     document.querySelector("#container-section").innerHTML = `
 
 
@@ -150,89 +245,4 @@ export function affichage(user, repo) {
                 
    
      `
-    const articlecontainer = document.querySelector("#article-container")
-    articlecontainer.innerHTML = ""
-
-
-    if (repo.length == 0) {
-        console.log(repo.length)
-        const reposection = document.createElement("article");
-        reposection.className = "col-span-full col-start-1 w-full"
-        reposection.innerHTML = `  
-       
-               <!-- si there is no repo -->
-                <div id="repos-empty" class="text-center py-10 col-span-full">
-                   
-                    <i class="fa-regular fa-folder-open
-                            text-4xl text-[#22D3EE] mb-4"></i>
-
-                    <p class="text-slate-300 ">
-                        Aucun dépôt trouvé
-                    </p>
-                  
-                </div>
-        `
-        articlecontainer.appendChild(reposection);
-
-    } else {
-
-
-
-        //creat repos
-
-        repo.forEach(repo => {
-
-
-            const reposection = document.createElement("article");
-            let ms = new Date().getTime() - new Date(repo.updated_at).getTime()
-            let date = Math.floor(ms / (1000 * 60 * 60 * 24))
-
-            reposection.className = "bg-[#0F172A]/80 border border-slate-700 rounded-2xl p-5 hover:border-[#22D3EE]/60"
-            reposection.innerHTML = `  
-       
-
-                        <div class="flex items-center gap-2 mb-4">
-                            <i class="fa-regular fa-square text-[#22D3EE]"></i>
-
-                            <h3 class="repo-name font-bold text-white">${repo.name} </h3>
-
-                        </div>
-
-                        <p class="repo-description text-sm mb-4">
-                           ${repo.description} 
-                        </p>
-
-                        <div class="repo-about flex flex-wrap items-center gap-4 text-xs text-slate-300">
-
-                            <span class="repo-lang">
-                                <i class="fa-solid fa-circle text-[7px]"></i>
-                               ${repo.language} 
-                            </span>
-
-                            <span class="repo-stars text-yellow-400">
-                                <i class="fa-solid fa-star"></i>
-                               ${repo.stargazers_count} 
-                            </span>
-
-                            <span class="repo-forks text-[#22D3EE]">
-                                <i class="fa-solid fa-code-fork"></i>
-                               ${repo.forks_count} 
-                            </span>
-
-                        </div>
-
-                        <p class="last-update text-slate-500 text-xs mt-4">
-                            miss ajour il y ${date} jours
-                        </p>
-
-        `
-            articlecontainer.appendChild(reposection);
-
-
-        });
-
-    }
-
-
-
 }

@@ -13,51 +13,24 @@ let filter = document.querySelector("#filter")
 export let recherch = "", language = "tous"
 
 
-let userinfo,repo;
+let userinfo, repo;
 // function of the search
 search()
 
-let localdata=relire("test")
-let found;
-if (localdata.length > 0) {
-    found = localdata.find(c => c.user.login === name);
-    if (found) {
-        console.log("hey from local storage")
-        let data = test.filter(c => c.user.login === name)
 
-        userinfo = data[0].user
-        repo = data[0].repo
+let data = relire(`data-${name}`);
+if (data === null) {
+    data = await getdata(name); // requête seulement si besoin
+    ranger(`data-${name}`, data);
+    userinfo = data[0]
+    repo = data[1]
 
-    }
-}
-if (!found) {
-
-    await getdata(name)
-        .then(async (data) => {
-            console.log("try", data)
-
-            const storageData = {
-                user: data[0],
-                repo: data[1],
-                createdAt: Date.now()
-            };
-            localdata.push(storageData)
-            ranger("localdata",localdata)
-            
-            console.log("local", localdata)
-
-            // get user & repo info
-            userinfo = data[0];
-            repo = data[1]
-        })
-        .catch(error => {
-            console.error(error)
-        });
+    console.log(data, "from null")
+} else {
+    userinfo = data[0]
+    repo = data[1]
 
 }
-
-
-
 
 
 
@@ -76,10 +49,11 @@ let user = {
 }
 affichage(user, repo)
 
-document.querySelector("#add-shortlist").addEventListener("click",async() => {
-
+document.querySelector("#add-shortlist").addEventListener("click", async () => {
+    document.querySelector("#add-shortlist").disabled = true
+    console.log(document.querySelector("#add-shortlist"))
     // see if the condida is already exit
- 
+
     const condidats = await get()
     let found = condidats.some(condidat => condidat.login == userinfo.login);
 
@@ -96,11 +70,14 @@ document.querySelector("#add-shortlist").addEventListener("click",async() => {
             note: "",
             createdAt: new Date().toLocaleDateString(),
         }
-        post(userobject)
+        await post(userobject)
         showsuccess("Candidate is added successfully!");
+        document.querySelector("#add-shortlist").disabled = false
     } else {
         showerror("Candidate is already in the shortliste")
+        document.querySelector("#add-shortlist").disabled = false
     }
+    console.log(document.querySelector("#add-shortlist"))
 
 })
 
