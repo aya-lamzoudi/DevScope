@@ -73,13 +73,6 @@ section.addEventListener("click", (event) => {
             event.target.closest("button").disabled = false
 
         })
-
-
-
-
-
-
-
     }
 
 })
@@ -117,23 +110,17 @@ form.addEventListener("submit", async function (event) {
                 cond.rating = form.querySelector("#rating").value
                 cond.status = form.querySelector("#status").value
                 await update(cond, cond.id);
+                condidats = await get()
             }
         })
-        condidats = await get()
+
         affichage(condidats);
 
         btndisable.disabled = false;
-
         popup()
         showsuccess("Candidate updated successfully!")
 
     }
-
-
-
-
-
-
 })
 
 

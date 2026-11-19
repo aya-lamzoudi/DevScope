@@ -57,7 +57,7 @@ if (!found) {
 }
 
 
-const condidats = await get()
+
 
 
 
@@ -76,8 +76,11 @@ let user = {
 }
 affichage(user, repo)
 
-document.querySelector("#add-shortlist").addEventListener("click", () => {
+document.querySelector("#add-shortlist").addEventListener("click",async() => {
+
     // see if the condida is already exit
+ 
+    const condidats = await get()
     let found = condidats.some(condidat => condidat.login == userinfo.login);
 
     if (!found) {

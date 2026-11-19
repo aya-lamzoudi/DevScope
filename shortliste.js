@@ -19,11 +19,10 @@ function filter(condidat) {
 export function affichage(condidats) {
 
     // afficher number of the condidats
-    document.querySelector("#shortlist-count").innerText = condidats.length
-    
     const section = document.querySelector("#devlopper-list");
     section.innerHTML = "";
     condidats = filter(condidats)
+    document.querySelector("#shortlist-count").innerText = condidats.length
     condidats.forEach(condidat => {
         const rate = document.createElement("div")
         rate.className = "rating flex gap-0.5 text-[#A3E635] text-lg"
